@@ -1,0 +1,4 @@
+"spec","total_lppd","delta_vs_baseline","delta_vs_4cov_primary"
+"baseline_train",-1038.68677464222,0,NA
+"primary_4cov",-1032.43034690883,6.25642773338905,0
+"primary_3cov",-1033.850471008,4.83630363421435,-1.4201240991747
