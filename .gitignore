@@ -1,0 +1,31 @@
+# Chain RDA files (deposited at Zenodo, ~7 GB total)
+*.rda
+*.rds
+
+# R / Python build artefacts
+.Rhistory
+.Rproj.user/
+.Rapp.history
+*.Rcheck/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# Local environment / IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Working directories that can be regenerated
+gibbs_baseline_train/
+gibbs_primary/
+gibbs_secondary/
+data/PanTCGA/
+data/split_indices.rda
+data/train_data.rda
+data/test_data.rda
+data/target_covs_*.rda

@@ -1,0 +1,257 @@
+cancer,hierarchy,granularity,group,contested
+PAAD,tissue_origin,1a_5bin,Digestive,FALSE
+STAD,tissue_origin,1a_5bin,Digestive,FALSE
+CHOL,tissue_origin,1a_5bin,Digestive,FALSE
+LIHC,tissue_origin,1a_5bin,Digestive,FALSE
+ESCA,tissue_origin,1a_5bin,Digestive,FALSE
+CORE,tissue_origin,1a_5bin,Digestive,FALSE
+OV,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+CESC,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+PRAD,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+BRCA,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+UCS,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+KIRP,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+KICH,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+UCEC,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+BLCA,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+KIRC,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+TGCT,tissue_origin,1a_5bin,Urogen+Repro,FALSE
+THYM,tissue_origin,1a_5bin,Endocrine,FALSE
+PCPG,tissue_origin,1a_5bin,Endocrine,FALSE
+THCA,tissue_origin,1a_5bin,Endocrine,FALSE
+ACC,tissue_origin,1a_5bin,Endocrine,FALSE
+LUSC,tissue_origin,1a_5bin,Thoracic,FALSE
+MESO,tissue_origin,1a_5bin,Thoracic,FALSE
+LUAD,tissue_origin,1a_5bin,Thoracic,FALSE
+LGG,tissue_origin,1a_5bin,Other,FALSE
+HNSC,tissue_origin,1a_5bin,Other,FALSE
+SARC,tissue_origin,1a_5bin,Other,FALSE
+SKCM,tissue_origin,1a_5bin,Other,FALSE
+DLBC,tissue_origin,1a_5bin,Other,FALSE
+LUSC,tissue_origin,1b_11bin,Lung+pleura,FALSE
+MESO,tissue_origin,1b_11bin,Lung+pleura,FALSE
+LUAD,tissue_origin,1b_11bin,Lung+pleura,FALSE
+KIRC,tissue_origin,1b_11bin,Kidney,FALSE
+KIRP,tissue_origin,1b_11bin,Kidney,FALSE
+KICH,tissue_origin,1b_11bin,Kidney,FALSE
+CHOL,tissue_origin,1b_11bin,Hepatobiliary+pancreas,FALSE
+PAAD,tissue_origin,1b_11bin,Hepatobiliary+pancreas,FALSE
+LIHC,tissue_origin,1b_11bin,Hepatobiliary+pancreas,FALSE
+STAD,tissue_origin,1b_11bin,GI tract,FALSE
+ESCA,tissue_origin,1b_11bin,GI tract,FALSE
+CORE,tissue_origin,1b_11bin,GI tract,FALSE
+BRCA,tissue_origin,1b_11bin,Breast,FALSE
+OV,tissue_origin,1b_11bin,Gynecological,FALSE
+UCS,tissue_origin,1b_11bin,Gynecological,FALSE
+UCEC,tissue_origin,1b_11bin,Gynecological,FALSE
+CESC,tissue_origin,1b_11bin,Gynecological,FALSE
+PRAD,tissue_origin,1b_11bin,Male repro+bladder,FALSE
+BLCA,tissue_origin,1b_11bin,Male repro+bladder,FALSE
+TGCT,tissue_origin,1b_11bin,Male repro+bladder,FALSE
+THYM,tissue_origin,1b_11bin,Endocrine,FALSE
+PCPG,tissue_origin,1b_11bin,Endocrine,FALSE
+THCA,tissue_origin,1b_11bin,Endocrine,FALSE
+ACC,tissue_origin,1b_11bin,Endocrine,FALSE
+LGG,tissue_origin,1b_11bin,CNS,FALSE
+SKCM,tissue_origin,1b_11bin,Skin,FALSE
+HNSC,tissue_origin,1b_11bin,Soft+heme+H&N,FALSE
+SARC,tissue_origin,1b_11bin,Soft+heme+H&N,FALSE
+DLBC,tissue_origin,1b_11bin,Soft+heme+H&N,FALSE
+PAAD,epithelial_class,2a_3bin,Epithelial,FALSE
+STAD,epithelial_class,2a_3bin,Epithelial,FALSE
+CESC,epithelial_class,2a_3bin,Epithelial,FALSE
+BRCA,epithelial_class,2a_3bin,Epithelial,FALSE
+KIRP,epithelial_class,2a_3bin,Epithelial,FALSE
+KICH,epithelial_class,2a_3bin,Epithelial,FALSE
+CHOL,epithelial_class,2a_3bin,Epithelial,FALSE
+UCEC,epithelial_class,2a_3bin,Epithelial,FALSE
+THCA,epithelial_class,2a_3bin,Epithelial,FALSE
+ESCA,epithelial_class,2a_3bin,Epithelial,FALSE
+OV,epithelial_class,2a_3bin,Epithelial,FALSE
+LIHC,epithelial_class,2a_3bin,Epithelial,FALSE
+HNSC,epithelial_class,2a_3bin,Epithelial,FALSE
+PRAD,epithelial_class,2a_3bin,Epithelial,FALSE
+THYM,epithelial_class,2a_3bin,Epithelial,FALSE
+LUSC,epithelial_class,2a_3bin,Epithelial,FALSE
+CORE,epithelial_class,2a_3bin,Epithelial,FALSE
+LUAD,epithelial_class,2a_3bin,Epithelial,FALSE
+ACC,epithelial_class,2a_3bin,Epithelial,FALSE
+BLCA,epithelial_class,2a_3bin,Epithelial,FALSE
+KIRC,epithelial_class,2a_3bin,Epithelial,FALSE
+PCPG,epithelial_class,2a_3bin,Non-epithelial,FALSE
+LGG,epithelial_class,2a_3bin,Non-epithelial,FALSE
+SARC,epithelial_class,2a_3bin,Non-epithelial,FALSE
+SKCM,epithelial_class,2a_3bin,Non-epithelial,FALSE
+TGCT,epithelial_class,2a_3bin,Non-epithelial,FALSE
+DLBC,epithelial_class,2a_3bin,Hematological,FALSE
+HNSC,epithelial_class,2b_6bin,Squamous,FALSE
+LUSC,epithelial_class,2b_6bin,Squamous,FALSE
+ESCA,epithelial_class,2b_6bin,Squamous,FALSE
+CESC,epithelial_class,2b_6bin,Squamous,FALSE
+OV,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+PAAD,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+STAD,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+LIHC,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+BRCA,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+PRAD,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+CORE,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+LUAD,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+ACC,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+CHOL,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+UCEC,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+THCA,epithelial_class,2b_6bin,Adenocarcinoma,FALSE
+BLCA,epithelial_class,2b_6bin,Transitional,FALSE
+LGG,epithelial_class,2b_6bin,Glial,FALSE
+UCS,epithelial_class,2b_6bin,Mesenchymal/germ-cell,TRUE
+SARC,epithelial_class,2b_6bin,Mesenchymal/germ-cell,FALSE
+TGCT,epithelial_class,2b_6bin,Mesenchymal/germ-cell,FALSE
+MESO,epithelial_class,2b_6bin,Mesenchymal/germ-cell,TRUE
+PCPG,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+KIRP,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+THYM,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+KIRC,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+SKCM,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+DLBC,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+KICH,epithelial_class,2b_6bin,Heme/neural-crest/sui-generis,FALSE
+HNSC,epithelial_class,2c_10bin,Squamous,FALSE
+LUSC,epithelial_class,2c_10bin,Squamous,FALSE
+ESCA,epithelial_class,2c_10bin,Squamous,FALSE
+CESC,epithelial_class,2c_10bin,Squamous,FALSE
+PAAD,epithelial_class,2c_10bin,Glandular adeno,FALSE
+STAD,epithelial_class,2c_10bin,Glandular adeno,FALSE
+BRCA,epithelial_class,2c_10bin,Glandular adeno,FALSE
+PRAD,epithelial_class,2c_10bin,Glandular adeno,FALSE
+CORE,epithelial_class,2c_10bin,Glandular adeno,FALSE
+LUAD,epithelial_class,2c_10bin,Glandular adeno,FALSE
+ACC,epithelial_class,2c_10bin,Glandular adeno,FALSE
+THCA,epithelial_class,2c_10bin,Glandular adeno,FALSE
+LIHC,epithelial_class,2c_10bin,HCC,FALSE
+CHOL,epithelial_class,2c_10bin,Cholangiocarcinoma,FALSE
+KIRC,epithelial_class,2c_10bin,RCC,FALSE
+KIRP,epithelial_class,2c_10bin,RCC,FALSE
+KICH,epithelial_class,2c_10bin,RCC,FALSE
+BLCA,epithelial_class,2c_10bin,Urothelial,FALSE
+OV,epithelial_class,2c_10bin,Endometrioid+serous,FALSE
+UCEC,epithelial_class,2c_10bin,Endometrioid+serous,FALSE
+LGG,epithelial_class,2c_10bin,Glial,FALSE
+UCS,epithelial_class,2c_10bin,Mesench/mesothelial/sarcoma,TRUE
+SARC,epithelial_class,2c_10bin,Mesench/mesothelial/sarcoma,FALSE
+MESO,epithelial_class,2c_10bin,Mesench/mesothelial/sarcoma,TRUE
+PCPG,epithelial_class,2c_10bin,Other (germ/melan/neuroend/heme/thymic),FALSE
+THYM,epithelial_class,2c_10bin,Other (germ/melan/neuroend/heme/thymic),FALSE
+SKCM,epithelial_class,2c_10bin,Other (germ/melan/neuroend/heme/thymic),FALSE
+DLBC,epithelial_class,2c_10bin,Other (germ/melan/neuroend/heme/thymic),FALSE
+TGCT,epithelial_class,2c_10bin,Other (germ/melan/neuroend/heme/thymic),FALSE
+PAAD,germ_layer,3a_3bin,Endoderm,FALSE
+STAD,germ_layer,3a_3bin,Endoderm,FALSE
+LIHC,germ_layer,3a_3bin,Endoderm,FALSE
+LUSC,germ_layer,3a_3bin,Endoderm,FALSE
+CORE,germ_layer,3a_3bin,Endoderm,FALSE
+LUAD,germ_layer,3a_3bin,Endoderm,FALSE
+CHOL,germ_layer,3a_3bin,Endoderm,FALSE
+THCA,germ_layer,3a_3bin,Endoderm,FALSE
+ESCA,germ_layer,3a_3bin,Endoderm,FALSE
+OV,germ_layer,3a_3bin,Mesoderm,FALSE
+MESO,germ_layer,3a_3bin,Mesoderm,FALSE
+UCS,germ_layer,3a_3bin,Mesoderm,FALSE
+SARC,germ_layer,3a_3bin,Mesoderm,FALSE
+KIRP,germ_layer,3a_3bin,Mesoderm,FALSE
+KICH,germ_layer,3a_3bin,Mesoderm,FALSE
+ACC,germ_layer,3a_3bin,Mesoderm,FALSE
+DLBC,germ_layer,3a_3bin,Mesoderm,FALSE
+UCEC,germ_layer,3a_3bin,Mesoderm,FALSE
+KIRC,germ_layer,3a_3bin,Mesoderm,FALSE
+PCPG,germ_layer,3a_3bin,Ectoderm,FALSE
+SKCM,germ_layer,3a_3bin,Ectoderm,FALSE
+LGG,germ_layer,3a_3bin,Ectoderm,FALSE
+PAAD,germ_layer,3b_mid,Foregut endoderm,FALSE
+STAD,germ_layer,3b_mid,Foregut endoderm,FALSE
+LIHC,germ_layer,3b_mid,Foregut endoderm,FALSE
+LUSC,germ_layer,3b_mid,Foregut endoderm,FALSE
+LUAD,germ_layer,3b_mid,Foregut endoderm,FALSE
+CHOL,germ_layer,3b_mid,Foregut endoderm,FALSE
+THCA,germ_layer,3b_mid,Foregut endoderm,FALSE
+ESCA,germ_layer,3b_mid,Foregut endoderm,FALSE
+CORE,germ_layer,3b_mid,Hindgut endoderm,FALSE
+LGG,germ_layer,3b_mid,Neural ectoderm,FALSE
+PCPG,germ_layer,3b_mid,Neural crest,FALSE
+SKCM,germ_layer,3b_mid,Neural crest,FALSE
+OV,germ_layer,3b_mid,Intermediate mesoderm,FALSE
+KIRC,germ_layer,3b_mid,Intermediate mesoderm,FALSE
+KIRP,germ_layer,3b_mid,Intermediate mesoderm,FALSE
+KICH,germ_layer,3b_mid,Intermediate mesoderm,FALSE
+ACC,germ_layer,3b_mid,Intermediate mesoderm,FALSE
+UCS,germ_layer,3b_mid,Lateral plate mesoderm,FALSE
+UCEC,germ_layer,3b_mid,Lateral plate mesoderm,FALSE
+MESO,germ_layer,3b_mid,Lateral plate mesoderm,FALSE
+DLBC,germ_layer,3b_mid,Hematopoietic mesoderm,FALSE
+SARC,germ_layer,3b_mid,Paraxial+lateral mesoderm,FALSE
+PAAD,sex_composition,4_4bin,Both,FALSE
+STAD,sex_composition,4_4bin,Both,FALSE
+PCPG,sex_composition,4_4bin,Both,FALSE
+MESO,sex_composition,4_4bin,Both,FALSE
+SKCM,sex_composition,4_4bin,Both,FALSE
+KIRP,sex_composition,4_4bin,Both,FALSE
+DLBC,sex_composition,4_4bin,Both,FALSE
+KICH,sex_composition,4_4bin,Both,FALSE
+CHOL,sex_composition,4_4bin,Both,FALSE
+THCA,sex_composition,4_4bin,Both,FALSE
+ESCA,sex_composition,4_4bin,Both,FALSE
+LIHC,sex_composition,4_4bin,Both,FALSE
+HNSC,sex_composition,4_4bin,Both,FALSE
+THYM,sex_composition,4_4bin,Both,FALSE
+LUSC,sex_composition,4_4bin,Both,FALSE
+SARC,sex_composition,4_4bin,Both,FALSE
+CORE,sex_composition,4_4bin,Both,FALSE
+LUAD,sex_composition,4_4bin,Both,FALSE
+ACC,sex_composition,4_4bin,Both,FALSE
+BLCA,sex_composition,4_4bin,Both,FALSE
+KIRC,sex_composition,4_4bin,Both,FALSE
+LGG,sex_composition,4_4bin,Both,FALSE
+OV,sex_composition,4_4bin,Female-only,FALSE
+UCS,sex_composition,4_4bin,Female-only,FALSE
+UCEC,sex_composition,4_4bin,Female-only,FALSE
+CESC,sex_composition,4_4bin,Female-only,FALSE
+PRAD,sex_composition,4_4bin,Male-only,FALSE
+TGCT,sex_composition,4_4bin,Male-only,FALSE
+BRCA,sex_composition,4_4bin,Female-dominant,FALSE
+PAAD,hoadley,5a_4plus_unassigned,Pan-GI,FALSE
+CHOL,hoadley,5a_4plus_unassigned,Pan-GI,FALSE
+STAD,hoadley,5a_4plus_unassigned,Pan-GI,FALSE
+CORE,hoadley,5a_4plus_unassigned,Pan-GI,FALSE
+OV,hoadley,5a_4plus_unassigned,Pan-gyn,FALSE
+BRCA,hoadley,5a_4plus_unassigned,Pan-gyn,FALSE
+UCEC,hoadley,5a_4plus_unassigned,Pan-gyn,FALSE
+KIRC,hoadley,5a_4plus_unassigned,Pan-kidney,FALSE
+KIRP,hoadley,5a_4plus_unassigned,Pan-kidney,FALSE
+HNSC,hoadley,5a_4plus_unassigned,Pan-squamous,FALSE
+LUSC,hoadley,5a_4plus_unassigned,Pan-squamous,FALSE
+PCPG,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+LIHC,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+MESO,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+PRAD,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+UCS,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+SARC,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+DLBC,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+LUAD,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+KICH,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+ACC,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+SKCM,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+THCA,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+TGCT,hoadley,5a_4plus_unassigned,Unassigned,FALSE
+DLBC,hoadley,5c_iclusters,C3,FALSE
+CORE,hoadley,5c_iclusters,C4,FALSE
+PCPG,hoadley,5c_iclusters,C5,FALSE
+OV,hoadley,5c_iclusters,C6,FALSE
+UCEC,hoadley,5c_iclusters,C8,FALSE
+KICH,hoadley,5c_iclusters,C9,FALSE
+ACC,hoadley,5c_iclusters,C9,FALSE
+THCA,hoadley,5c_iclusters,C12,FALSE
+LUAD,hoadley,5c_iclusters,C14,FALSE
+SKCM,hoadley,5c_iclusters,C15,FALSE
+PRAD,hoadley,5c_iclusters,C16,FALSE
+BRCA,hoadley,5c_iclusters,C19,FALSE
+SARC,hoadley,5c_iclusters,C20,FALSE
+LIHC,hoadley,5c_iclusters,C26,FALSE
+KIRC,hoadley,5c_iclusters,C28,FALSE
+KIRP,hoadley,5c_iclusters,C28,FALSE

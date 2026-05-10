@@ -1,0 +1,7 @@
+metric,value
+n_survivors,16.0
+n_distinct_blocks,10.0
+n_distinct_cov_ids,12.0
+n_cov_x_hier_x_gran_with_jacc_eq_1,3.0
+pca_n_components_90pct,5.0
+pca_pct_variance_first_component,0.409

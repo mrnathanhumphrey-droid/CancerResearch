@@ -1,0 +1,6 @@
+hierarchy,granularities,n_covs_compared,rho_obs,rho_perm_median,rho_perm_p95,p_empirical_one_sided,B_used,interpretation
+tissue_origin,"(1a_5bin, 1b_11bin)",34,0.8720349412844144,0.7692543544754227,0.8684564414492463,0.042,1000,REAL
+epithelial_class,"(2a_3bin, 2b_6bin)",28,0.32183908045977005,0.4657909140667761,0.7175971538040503,0.799,1000,ARTIFACT (nesting / chance)
+epithelial_class,"(2a_3bin, 2c_10bin)",28,0.007663884018669864,0.2735546353352116,0.5818281335522714,0.918,1000,ARTIFACT (nesting / chance)
+epithelial_class,"(2b_6bin, 2c_10bin)",34,0.47459699122389887,0.6338668387649773,0.8384262796027501,0.861,1000,ARTIFACT (nesting / chance)
+germ_layer,"(3a_3bin, 3b_mid)",28,0.25615763546798026,0.5637657361795292,0.7695675971538041,0.968,1000,ARTIFACT (nesting / chance)

@@ -1,0 +1,4 @@
+"spec","total_lppd","n_test_patients","delta_vs_baseline"
+"baseline_train",-1038.68677464222,1362,0
+"primary",-1032.43034690883,1362,6.25642773338905
+"secondary",-1034.35911255979,1362,4.32766208242401
