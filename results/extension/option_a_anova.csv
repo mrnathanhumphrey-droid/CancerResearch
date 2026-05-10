@@ -1,0 +1,4 @@
+epi_2a_group,n_cancers,n_tissues,n_singleton_tissues,n_multi_tissues,eta_obs,eta_perm_median,eta_perm_p95,p_empirical,F,p_F,underpowered
+Epithelial,21,9,2,7,0.6081695138486923,0.38106733860864206,0.6854723569106134,0.117,2.3281860473224305,0.09052271323525782,FALSE
+Hematological,1,1,1,0,,,,,,,TRUE
+Non-epithelial,4,4,4,0,1.0,1.0,1.0,1.0,,,TRUE

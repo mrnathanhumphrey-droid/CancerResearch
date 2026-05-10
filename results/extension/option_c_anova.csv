@@ -1,0 +1,4 @@
+epi_2a_group,n_cancers,n_labels,n_singleton_labels,n_multi_labels,eta_obs,eta_perm_median,eta_perm_p95,p_empirical,F,p_F,underpowered
+Epithelial,21,19,18,1,0.9879103013639319,0.9527684143164097,0.9976550324657747,0.232,9.079449750317382,0.103691270373434,TRUE
+Hematological,1,1,1,0,,,,,,,TRUE
+Non-epithelial,4,4,4,0,1.0,1.0,1.0,1.0,,,TRUE

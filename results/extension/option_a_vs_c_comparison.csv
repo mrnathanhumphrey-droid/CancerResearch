@@ -1,0 +1,4 @@
+epi_2a_group,etaA,pA,underpowered_A,etaC,pC,underpowered_C,delta_eta_C_minus_A
+Epithelial,0.6081695138486923,0.117,FALSE,0.9879103013639319,0.232,TRUE,0.37974078751523954
+Hematological,,,TRUE,,,TRUE,
+Non-epithelial,1.0,1.0,TRUE,1.0,1.0,TRUE,0.0
