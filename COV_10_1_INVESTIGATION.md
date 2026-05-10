@@ -50,25 +50,25 @@ tail-ESS min 1846. Halt rule not triggered.
 
 ---
 
-## 3. Verdict — Reading A
+## 3. Result — Reading A holds, with structural detail
 
-The bootstrap CI on (3-cov − 4-cov) includes zero, so dropping cov 10.1 does
-**not** significantly hurt held-out performance. Reading A holds.
+The bootstrap CI on (3-cov − 4-cov) includes zero (point estimate −1.42 nats,
+CI [−4.40, +1.65]). Per the test design, this is **Reading A**: cov 10.1's
+contribution is statistically indistinguishable from zero at this n.
 
-But the verdict has a caveat with paper-defensibility consequences:
+The structural detail beyond the binary verdict:
 
-- Cov 10.1's contribution to LPPD is statistically indistinguishable from
-  zero (CI on its contribution: roughly [−4.40, +1.65] nats, point estimate
-  +1.42 nats, p ≈ 0.16 in the bootstrap one-sided test).
-- However, **without** cov 10.1, the 3-cov spec's improvement over baseline
-  (+4.84 nats) has 95% CI [−0.82, +10.05] that **includes zero**. The
-  3-cov spec does **not** meet the original Paper 1 decision rule
-  (Δ > +2 *and* CI excludes zero).
-
-So: cov 10.1 was nudging the 4-cov result across the pre-registered
-"outperforms" threshold. Without it, the rest of the structural-prior
-treatment passes the +2-nat point-estimate threshold but not the
-CI-excludes-zero threshold.
+- Cov 10.1's bootstrap one-sided p (proportion of bootstrap samples where
+  3-cov ≥ 4-cov) ≈ 0.16. Not significant; not vanishingly small either.
+- Without cov 10.1, the 3-cov spec's improvement over baseline (+4.84 nats)
+  has 95% CI [−0.82, +10.05] that **includes zero**. The 3-cov spec does
+  **not** independently meet the original Paper 1 decision rule (Δ > +2
+  *and* CI excludes zero).
+- So the 4-cov spec is passing the decision rule with cov 10.1 contributing
+  enough point-estimate (+1.42) and tightening (CI lower bound shifts from
+  −0.82 to +0.34) to clear the threshold. Remove cov 10.1 and the rest of
+  the model passes the +2-nat point-estimate criterion but not the
+  CI-excludes-zero criterion.
 
 ---
 
@@ -101,55 +101,41 @@ per-cancer redistribution is real.
 
 ---
 
-## 5. Two honest options for Paper 1
+## 5. Statistical summary
 
-### Option (a): Keep the 4-covariate spec, document the caveat
+The data without disposition framing:
 
-Paper 1's "outperforms" claim stands at Δ=+6.26 nats with CI excluding zero,
-but the methods explicitly note:
+- **The 4-cov primary spec's improvement over baseline** is +6.26 nats with
+  bootstrap 95% CI [+0.34, +12.29] — point estimate well above the +2-nat
+  threshold; CI excludes zero only by ≈0.3 nats at the lower bound.
+- **Removing cov 10.1** drops the point estimate by 1.42 nats. The CI on
+  this drop ([−4.40, +1.65]) includes zero — the per-test difference is
+  not statistically distinguishable from zero at B=1000.
+- **The 3-cov spec's improvement over baseline** is +4.84 nats with CI
+  [−0.82, +10.05] — point estimate above +2 but CI now overlaps zero at
+  the lower bound by ≈0.8 nats.
 
-- Cov 10.1's individual contribution is borderline (point estimate +1.42 nats,
-  bootstrap CI on its removal [−1.65, +4.40], includes zero).
-- Without cov 10.1, the spec is "matches" not "outperforms" under the
-  original decision rule.
-- The 4-covariate result is therefore at the edge of the decision rule's
-  resolution rather than well above it.
+Three numerical relationships matter:
 
-This is the more conservative paper claim with full transparency about the
-limit-of-the-test situation.
+1. The 4-cov spec is at the lower edge of the CI-excludes-zero criterion
+   (lower bound +0.34).
+2. Cov 10.1's individual contribution is in the noise band (CI includes
+   zero, point estimate +1.42).
+3. Removing cov 10.1 moves the spec from "CI excludes zero" to "CI includes
+   zero" — i.e., cov 10.1 is the marginal covariate by which the 4-cov
+   spec passes its decision rule.
 
-### Option (b): Drop cov 10.1, paper becomes "matches"
+Per-cancer redistribution: cov 10.1 contributes positive LPPD in LIHC, LUSC,
+SARC, OV, BLCA, HNSC; negative LPPD in CHOL, KIRP, STAD. Aggregate is the
++1.42-nat point estimate; redistribution within is real.
 
-The headline becomes: 3-covariate structural priors (cov 8.2 / 1.1 / 20.1)
-match the unconstrained baseline on held-out predictive performance with a
-73%-equivalent parameter reduction (3 × 29 = 87 free betas → 3 × {3, 10, 8} =
-21 group-shared betas).
-
-This is a narrower methodology contribution: the structural priors don't
-*hurt* held-out performance, even with the parameter reduction. The
-"outperforms" claim is dropped; the paper makes the "matches" claim instead.
-
----
-
-## 6. Recommendation
-
-The data supports either option. The choice is a paper-defensibility call,
-not a statistical one.
-
-- **Option (a)** is defensible if the paper foregrounds the bootstrap CI's
-  limit-of-resolution character honestly. Risks: a careful reviewer may
-  zero in on the cov-10.1 caveat and require the 3-cov sensitivity test be
-  the headline.
-- **Option (b)** is more conservative and sidesteps that risk entirely. The
-  scientific contribution is narrower but the claim is rock-solid.
-
-The 3-covariate Gibbs run, its convergence diagnostics, and its bootstrap CI
-are deposited in this repository so reviewers can evaluate either framing
-directly.
+The 3-covariate Gibbs run, its convergence diagnostics, and its bootstrap
+CI are deposited in this repository for downstream reviewers and
+disposition decisions.
 
 ---
 
-## 7. Files
+## 6. Files
 
 | file | contents |
 |---|---|
