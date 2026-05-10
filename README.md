@@ -61,11 +61,12 @@ performed.
 ├── README.md                                 ← this file
 ├── README.pdf                                ← printable version
 ├── LICENSE                                   ← MIT (this work) + upstream attribution
-├── PRE_REGISTRATION.md                       ← locked decision rules
+├── PRE_REGISTRATION.md                       ← Paper 1 — locked decision rules
+├── PRE_REGISTRATION_PAPER2.md                ← Paper 2 — operator-composition extension (compute deferred)
 ├── REPLICATION_RESULTS.md                    ← baseline replication numbers
 ├── SCREENING_SUMMARY.md                      ← screening pass output
 ├── FALSIFICATION_REPORT.md                   ← 6-check adversarial audit of screening
-├── VALIDATION_RESULTS.md                     ← pre-registered held-out validation
+├── VALIDATION_RESULTS.md                     ← pre-registered held-out validation (Paper 1)
 ├── reference/
 │   └── cancer_type_hierarchies_2026-05-09.md ← 29 cancers × 5 hierarchies × granularities
 ├── scripts/
@@ -190,6 +191,27 @@ relevant functions is documented in the validation pipeline if needed.
 Random seeds are fixed throughout: chains 1–4 use seeds 20260509–20260512;
 the held-out split uses seed 42; bootstrap uses 20260510; permutation
 nulls use 20260509 and 20260511.
+
+---
+
+## Paper 2 — operator-composition extension (pre-registered, compute deferred)
+
+A separate pre-registration covers a methodology-extension question: do
+operator compositions (combinations of structural priors across
+hierarchies) recover patterns single-operator priors miss? The
+specification list (3 covariates × 3 composition rules × 2 hierarchy pairs
+= 18 Gibbs specs), decision rules, and Bonferroni-corrected validation
+criteria are locked at `PRE_REGISTRATION_PAPER2.md`.
+
+**Compute has not run.** Per the pre-registration's stated prerequisites,
+extension compute waits for: (a) Paper 1 shipped, (b) the
+wrongly-grouped diagnostic complete, and (c) this pre-registration
+document committed to the public repo. The third condition is satisfied
+by the commit that introduces this file.
+
+If the extension validates: Paper 2 exists. If it falsifies: Paper 2
+does not exist as a methodology-extension paper, and the null-extension
+finding is documented.
 
 ---
 
