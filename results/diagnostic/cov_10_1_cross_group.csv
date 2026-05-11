@@ -1,0 +1,44 @@
+cancer,baseline_lppd,lppd_4cov_with10_1,lppd_3cov_without10_1,cov_10_1_contribution,abs_contribution,direction
+# CHECK 1: cov 10.1 per-cancer contribution = (4-cov LPPD) - (3-cov LPPD) for each cancer.
+# Sorted by magnitude of contribution (descending).
+LIHC,-50.7651,-49.2922,-50.1946,0.9024,0.9024,positive
+LUSC,-99.1775,-97.7431,-98.3696,0.6265,0.6265,positive
+SARC,-39.1422,-37.9540,-38.4966,0.5426,0.5426,positive
+STAD,-60.1220,-60.9653,-60.5261,-0.4392,0.4392,negative
+OV,-69.1699,-68.4228,-68.7824,0.3596,0.3596,positive
+BLCA,-60.1151,-59.8828,-60.2087,0.3259,0.3259,positive
+KIRP,-22.7800,-23.9202,-23.6458,-0.2744,0.2744,negative
+CHOL,-10.2119,-10.1319,-9.8747,-0.2572,0.2572,negative
+PRAD,-5.3001,-5.6665,-5.4407,-0.2258,0.2258,negative
+SKCM,-63.5120,-63.5304,-63.3151,-0.2153,0.2153,negative
+CESC,-19.9296,-19.8056,-19.9791,0.1734,0.1734,positive
+HNSC,-69.3568,-68.8233,-68.9905,0.1672,0.1672,positive
+KIRC,-90.1808,-89.7592,-89.6221,-0.1371,0.1371,negative
+BRCA,-53.5410,-53.3338,-53.2054,-0.1284,0.1284,negative
+PAAD,-27.8336,-27.6737,-27.5756,-0.0981,0.0981,negative
+UCEC,-50.2194,-48.6264,-48.5466,-0.0798,0.0798,negative
+THCA,-7.8892,-7.8195,-7.8855,0.0660,0.0660,positive
+PCPG,-0.8665,-0.8998,-0.9574,0.0576,0.0576,positive
+ESCA,-27.2846,-27.1463,-27.1880,0.0417,0.0417,positive
+TGCT,-1.5825,-1.9601,-1.9197,-0.0404,0.0404,negative
+KICH,-5.0369,-4.9906,-5.0258,0.0352,0.0352,positive
+MESO,-16.9042,-16.8472,-16.8805,0.0333,0.0333,positive
+LGG,-40.0317,-40.1012,-40.1305,0.0293,0.0293,positive
+LUAD,-62.5951,-62.9162,-62.8897,-0.0266,0.0266,negative
+CORE,-57.5117,-56.5278,-56.5488,0.0210,0.0210,positive
+THYM,-5.0960,-5.3294,-5.3109,-0.0185,0.0185,negative
+ACC,-6.6775,-6.5152,-6.4974,-0.0177,0.0177,negative
+DLBC,-4.0527,-4.0568,-4.0496,-0.0071,0.0071,negative
+UCS,-11.8013,-11.7893,-11.7932,-0.0039,0.0039,negative
+# Summary statistics for CHECK 1 decision rule,,,,,,
+# n_cancers_total = 29,,,,,,
+# n_positive_contribution = 15 (cov 10.1 helps),,,,,,
+# n_negative_contribution = 14 (cov 10.1 hurts),,,,,,
+# n_with_|contribution|_gt_1_nat = 0 (largest |contribution| is LIHC +0.902),,,,,,
+# n_with_|contribution|_gt_0.5_nat = 3 (LIHC +0.902, LUSC +0.626, SARC +0.543) — all positive direction,,,,,,
+# binomial_test_against_random_pm (n=29 nonzero, 15 positive) p_two_sided = 1.000,,,,,,
+# DECISION RULE (locked): 3+ cancers with |contrib|>1 in same direction AND binomial p<0.05 -> Reading B.,,,,,,
+# Result: 0 cancers cross |1 nat|. CHECK 1 -> READING A.,,,,,,
+# Sensitivity: even at relaxed threshold |contrib|>0.5 nat, only 3 cancers cross — all positive (LIHC/LUSC/SARC),,,,,,
+#   binomial p for 3 of 3 positive vs H0:50/50 = 0.250 (two-sided) — also fails p<0.05.,,,,,,
+# Cov 10.1's signal is neither concentrated (no cancer >1 nat) nor consistent (15/14 split is chance-tier).,,,,,,
