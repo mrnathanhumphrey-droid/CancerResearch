@@ -62,11 +62,15 @@ performed.
 ├── README.pdf                                ← printable version
 ├── LICENSE                                   ← MIT (this work) + upstream attribution
 ├── PRE_REGISTRATION.md                       ← Paper 1 — locked decision rules
-├── PRE_REGISTRATION_PAPER2.md                ← Paper 2 — operator-composition extension (compute deferred)
+├── PRE_REGISTRATION_PAPER2.md                ← Paper 2 — operator-composition extension (pre-registration)
+├── EXTENSION_VALIDATION_RESULTS.md           ← Paper 2 — 18-spec verdict + per-spec table
 ├── REPLICATION_RESULTS.md                    ← baseline replication numbers
 ├── SCREENING_SUMMARY.md                      ← screening pass output
 ├── FALSIFICATION_REPORT.md                   ← 6-check adversarial audit of screening
 ├── VALIDATION_RESULTS.md                     ← pre-registered held-out validation (Paper 1)
+├── WRONGLY_GROUPED_DIAGNOSTIC.md             ← within-group sign-agreement diagnostic (Paper 2 prerequisite b)
+├── COV_10_1_INVESTIGATION.md                 ← 3-cov sensitivity test on Paper 1 primary (Reading A vs B)
+├── FINER_RESOLUTION_RESULTS.md               ← cov 8.2 tissue-within-group ANOVA (discovery, ANOVA-only)
 ├── reference/
 │   └── cancer_type_hierarchies_2026-05-09.md ← 29 cancers × 5 hierarchies × granularities
 ├── scripts/
@@ -133,6 +137,28 @@ the 20% test set with B=1000 bootstrap CI. Result: primary specification
 outperforms baseline (Δ=+6.26 nats, CI excludes zero). See
 `VALIDATION_RESULTS.md`.
 
+### 5. Follow-up investigations (post-shipping)
+
+Three diagnostic / sensitivity analyses, all data-only reports without
+disposition recommendations:
+
+- **`WRONGLY_GROUPED_DIAGNOSTIC.md`** — within-group sign-agreement scan of
+  per-cancer baseline betas across all candidate (cov × hierarchy) cells
+  used in Paper 1 and Paper 2. Two cells flag (both cov 10.1 at epi/2a
+  and germ/3b); cov 8.2 is clean across all four candidate hierarchies.
+  Prerequisite (b) of the Paper 2 pre-registration.
+- **`COV_10_1_INVESTIGATION.md`** — refit Paper 1 primary on three
+  covariates (drop cov 10.1) to test whether cov 10.1's contribution
+  matters. 3-cov vs 4-cov Δ = −1.42 nats, bootstrap CI includes zero
+  (Reading A holds). The 3-cov spec alone has a CI that includes zero
+  against baseline, so cov 10.1 is the marginal covariate carrying the
+  4-cov result across the CI-excludes-zero threshold.
+- **`FINER_RESOLUTION_RESULTS.md`** — ANOVA + permutation null test of
+  whether tissue-within-group or hybrid tissue+subtype labels organize
+  cov 8.2 residuals beyond the coarse epi/2a 3-group prior used in
+  Paper 1. Epithelial group n=21, η²=0.608 vs perm null median 0.381,
+  p_emp=0.117. Directional consistency but not certified at this n.
+
 ---
 
 ## How to reproduce
@@ -194,7 +220,7 @@ nulls use 20260509 and 20260511.
 
 ---
 
-## Paper 2 — operator-composition extension (pre-registered, compute deferred)
+## Paper 2 — operator-composition extension
 
 A separate pre-registration covers a methodology-extension question: do
 operator compositions (combinations of structural priors across
@@ -203,15 +229,12 @@ specification list (3 covariates × 3 composition rules × 2 hierarchy pairs
 = 18 Gibbs specs), decision rules, and Bonferroni-corrected validation
 criteria are locked at `PRE_REGISTRATION_PAPER2.md`.
 
-**Compute has not run.** Per the pre-registration's stated prerequisites,
-extension compute waits for: (a) Paper 1 shipped, (b) the
-wrongly-grouped diagnostic complete, and (c) this pre-registration
-document committed to the public repo. The third condition is satisfied
-by the commit that introduces this file.
-
-If the extension validates: Paper 2 exists. If it falsifies: Paper 2
-does not exist as a methodology-extension paper, and the null-extension
-finding is documented.
+**Compute has run.** All 18 specs fit (4 chains × 100k iters each, 18/18
+converged at R-hat ≤ 1.05). Per-spec verdicts under the pre-registered
+decision rule (≥ +2 nats Δ vs Paper 1 anchor, CI excludes 0, Bonferroni
+p < 0.00278) are reported in `EXTENSION_VALIDATION_RESULTS.md`. The
+secondary diagnostic anchor (vs baseline-on-train, no structural priors)
+is included in the same table.
 
 ---
 

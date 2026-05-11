@@ -1,0 +1,21 @@
+# Paper 2 extension decision log
+Generated: 2026-05-10 22:21:59
+
+## Pre-registered decision rule
+- Bonferroni alpha: 0.002778 (= 0.05 / 18)
+- Decision threshold: |Delta| > 2.0 nats
+- Validates iff: >=2 specs IMPROVE AND >=1 of those is RULE 2 or RULE 3
+- Convergence halt: R-hat > 1.05 -> CONVERGENCE-FAILED, excluded from count
+
+## Counts
+  Total specs:                    18
+  CONVERGENCE-FAILED (excluded):  0
+  IMPROVES:                       0
+  NOMINAL-ONLY:                   0
+  MATCHES:                        0
+  UNDERPERFORMS:                  12
+  INCONCLUSIVE:                   6
+  IMPROVES (RULE 2 or RULE 3):    0
+
+## Verdict: FALSIFIES
+
