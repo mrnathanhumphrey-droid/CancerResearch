@@ -64,6 +64,8 @@ performed.
 ├── PRE_REGISTRATION.md                       ← Paper 1 — locked decision rules
 ├── PRE_REGISTRATION_PAPER2.md                ← Paper 2 — operator-composition extension (pre-registration)
 ├── EXTENSION_VALIDATION_RESULTS.md           ← Paper 2 — 18-spec verdict + per-spec table
+├── PRE_REGISTRATION_PAPER3_MOFAFLEX_NICHE.md ← Paper 3 — MOFA-FLEX niche joint-refit (pre-registration)
+├── MOFAFLEX_NICHE_JOINT_REFIT_RESULTS.md     ← Paper 3 — paired-Δ table + verdict
 ├── REPLICATION_RESULTS.md                    ← baseline replication numbers
 ├── SCREENING_SUMMARY.md                      ← screening pass output
 ├── FALSIFICATION_REPORT.md                   ← 6-check adversarial audit of screening
@@ -80,7 +82,8 @@ performed.
 ├── results/
 │   ├── replication/                          ← per-cancer × per-cov posterior table + diagnostics
 │   ├── screening/                            ← screening + 6 falsification CSVs
-│   └── validation/                           ← LPPD, bootstrap, per-cancer, convergence
+│   ├── validation/                           ← LPPD, bootstrap, per-cancer, convergence
+│   └── mofaflex_niche_joint_refit/           ← Paper 3 paired-Δ + drift + diagnostic CSVs
 └── data/
     └── README.md                             ← pointers to XYC, TCGA, Zenodo (chain RDAs)
 ```
@@ -235,6 +238,49 @@ decision rule (≥ +2 nats Δ vs Paper 1 anchor, CI excludes 0, Bonferroni
 p < 0.00278) are reported in `EXTENSION_VALIDATION_RESULTS.md`. The
 secondary diagnostic anchor (vs baseline-on-train, no structural priors)
 is included in the same table.
+
+---
+
+## Paper 3 — MOFA-FLEX niche residual class (cross-substrate test)
+
+A cross-substrate falsification of the same partial-pooling-on-residual-classes
+methodology, applied to a fundamentally different model family: the MOFA-FLEX
+joint factor model on paired Xenium (spatial transcriptomics) and Chromium
+(single-cell) breast-cancer reference data. The residual-class candidate is
+**niche** (3-category: tumor / stroma / immune), tested via joint refit of the
+W loading matrix with a hierarchical-niche prior. Pre-registered in
+`PRE_REGISTRATION_PAPER3_MOFAFLEX_NICHE.md`.
+
+**Compute has run.** 4 seeds × 4 specs (SANITY / PRIMARY / SECONDARY / NULL),
+joint VI refit on cuda. Three of four seeds fully converged; seed
+2511021635 SANITY OOM'd twice in anndata sparse merge and was excluded.
+Finalize aggregated on n=3 seeds. Per-cell paired-Δ vs same-seed SANITY:
+
+| spec | n_seeds | mean paired Δ (nats/cell) | sd | range |
+|---|---|---|---|---|
+| PRIMARY (λ=1, niche_3cat) | 3 | **−0.84** | 1.22 | [−1.78, +0.53] |
+| SECONDARY (λ=1, niche_5cat) | 3 | −0.31 | 0.93 | [−0.91, +0.76] |
+| NULL (λ=1, shuffled niche_3cat) | 3 | −0.63 | 1.93 | [−2.84, +0.74] |
+
+Pre-registered decision rule (PRIMARY paired Δ > +0.5 nats/cell with CI
+excluding 0 AND beating NULL by z ≥ 2): **FALSIFIED**. PRIMARY mean is
+negative; NULL paired-Δ is comparable in magnitude (and wider in spread).
+The niche operator class is insufficient on this substrate. See
+`MOFAFLEX_NICHE_JOINT_REFIT_RESULTS.md`.
+
+**Substrate-boundary interpretation:** the methodology that succeeded on the
+Lock 2022 spike-and-slab pan-cancer model (Paper 1 primary, +6.26 nats LPPD)
+does not transfer to a MOFA-FLEX-style joint factor model with niche-as-
+residual-class. The two substrates differ in (i) loss landscape (per-patient
+survival likelihood vs per-cell Gaussian VI ELBO), (ii) parameter density
+(per-cancer betas vs per-factor W rows), and (iii) baseline drift sensitivity
+(Gibbs posteriors vs VI re-init drift). One or more of these distinctions
+appears to break the structural-prior mechanism in this direction.
+
+The n=3 caveat is real: seed 1 SANITY's OOM was substrate-specific (anndata
+sparse merge alloc at ~3.6 GB), not a methodology failure. The 3-seed result
+is internally consistent across seeds 1636/1637/1638 (NULL noise dominates
+class signal in all three).
 
 ---
 

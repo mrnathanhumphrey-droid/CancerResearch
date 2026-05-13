@@ -1,0 +1,2 @@
+primary_paired_delta,primary_sd,null_paired_delta,null_sd,null_z_separation,sanity_drift_max_abs,cascade_A_sanity_drift_under_50,passes_1_paired_delta_above_0p5,passes_2_null_z_above_2,passes_3_repro_sd_under_5
+-0.8448461492856344,1.220185547193043,-0.6318801591793696,1.9334977945293501,-0.09314787099339486,21.96717643737793,True,False,False,True
