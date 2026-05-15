@@ -1,0 +1,30 @@
+cancer,thorsson_immune,malta_stemness_tertile,sanchez_vega_dominant_pathway
+ACC,C4,low,WNT
+BLCA,C1,high,Cell Cycle
+BRCA,C2,med,PI3K
+CESC,C2,med,PI3K
+CHOL,C3,low,RTK RAS
+CORE,C1,med,WNT
+DLBC,,high,Cell Cycle
+ESCA,C2,high,Cell Cycle
+HNSC,C2,high,Cell Cycle
+KICH,C3,med,TP53
+KIRC,C3,low,Cell Cycle
+KIRP,C3,low,RTK RAS
+LGG,C5,low,HIPPO
+LIHC,C4,high,Cell Cycle
+LUAD,C3,high,RTK RAS
+LUSC,C1,high,Cell Cycle
+MESO,C1,low,Cell Cycle
+OV,C2,high,TP53
+PAAD,C1,med,RTK RAS
+PCPG,C3,high,RTK RAS
+PRAD,C3,low,WNT
+SARC,C1,med,TP53
+SKCM,C1,med,RTK RAS
+STAD,C2,med,Cell Cycle
+TGCT,C2,high,RTK RAS
+THCA,C3,low,RTK RAS
+THYM,,low,RTK RAS
+UCEC,C1,med,PI3K
+UCS,C1,med,TP53

@@ -29,3 +29,6 @@ data/split_indices.rda
 data/train_data.rda
 data/test_data.rda
 data/target_covs_*.rda
+
+# Cloned upstream replication repo (clone fresh per data/README.md)
+upstream/
