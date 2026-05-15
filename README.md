@@ -1,20 +1,42 @@
 # Pan-Cancer Hierarchical Spike-and-Slab — Replication & Structural-Prior Validation
 
-A pre-registered held-out validation in which structural priors derived from
+Pre-registered held-out validation in which structural priors derived from
 external biological hierarchies replace the per-cancer fitted PIPs for four
-covariates of the Lock-lab pan-cancer survival spike-and-slab model. The
-pre-registered decision rule fires **OUTPERFORMS** for the primary
-specification.
+covariates of the Lock-lab pan-cancer survival spike-and-slab model.
+Multiple papers in the corpus; each pre-registered, each with locked
+decision rules.
 
 ---
 
-## TL;DR
+## Papers in this repository
+
+| paper | hierarchy/spec | verdict |
+|---|---|---|
+| **Paper 1** | epithelial-class + germ-layer (primary spec) | **OUTPERFORMS** — Δ +6.26 nats [+0.34, +12.29] |
+| Paper 1 secondary | epithelial-class + germ-layer (alt spec for cov 8.2) | inconclusive (+4.33 [−1.86, +10.97]) |
+| Paper 2 | operator-composition extension (18 specs) | per [EXTENSION_VALIDATION_RESULTS.md](EXTENSION_VALIDATION_RESULTS.md) |
+| Paper 3 | MOFA-FLEX niche joint refit | **FALSIFIED** — substrate boundary identified |
+| **Paper 4 Phase 1** (new 2026-05-15) | 3 new external hierarchies: Thorsson immune, Malta stemness, Sanchez-Vega pathway | **PAPER1_HIERARCHY_SPECIFIC** — 0/3 outperform at locked CI threshold; 2/3 trend positive with comparable magnitudes but statistical power insufficient at n_test=1,362 |
+
+## Paper 1 TL;DR (original headline)
 
 | model | held-out total LPPD | Δ vs baseline | bootstrap 95% CI | verdict |
 |---|---|---|---|---|
 | baseline (Samorodnitsky/Hoadley/Lock 2022, fit on 80% training) | −1038.69 | — | — | — |
 | **primary** structural-prior | **−1032.43** | **+6.26 nats** | **[+0.34, +12.29]** | **OUTPERFORMS** |
 | secondary structural-prior | −1034.36 | +4.33 nats | [−1.86, +10.97] | inconclusive |
+
+## Paper 4 Phase 1 TL;DR (new 2026-05-15)
+
+Pre-registration locked at commit `677406a` before any Phase 1 Gibbs run (see [PRE_REGISTRATION_PAPER4_PHASE1.md](PRE_REGISTRATION_PAPER4_PHASE1.md)). Tests whether Paper 1's +6.26 nat result generalizes to three other externally-published pan-cancer hierarchies, none derived from BIDIFAC+ blocks (so no circularity flag like Hoadley supercluster).
+
+| Hierarchy | Source | Observed Δ vs baseline | 95% CI | Verdict |
+|---|---|---|---|---|
+| Thorsson 2018 immune subtype (C1-C5) | Immunity 48(4):812 | **+4.69** | [−2.37, +11.45] | INCONCLUSIVE |
+| Malta 2018 stemness tertile (mDNAsi) | Cell 173:338 | +0.71 | [−5.57, +7.38] | MATCHES |
+| Sanchez-Vega 2018 dominant oncogenic pathway | Cell 173:321 | **+3.15** | [−4.10, +9.35] | INCONCLUSIVE |
+
+Joint disposition per pre-reg: **`PAPER1_HIERARCHY_SPECIFIC`** (0/3 outperform, 0/3 underperform). Honest reading: two of three (Thorsson, Sanchez-Vega) directionally replicate at +47% and +50% of Paper 1's magnitude respectively, but the n_test=1,362 bootstrap CIs are ~±7 nats wide so neither cleanly excludes zero. Malta is genuinely near zero (+0.71). Phase 2 candidates: k-fold extension to tighten CIs, or a Bayesian probability-of-improvement decision rule. See [PHASE1_RESULTS.md](PHASE1_RESULTS.md) for full numbers + commentary.
 
 Held-out test set: 1,362 patients across 29 cancer types, stratified random
 20% per cohort, seed 42. Four chains × 100,000 Gibbs iters per model,
