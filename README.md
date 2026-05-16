@@ -12,18 +12,22 @@ decision rules.
 
 | paper | hierarchy/spec | verdict |
 |---|---|---|
-| **Paper 1** | epithelial-class + germ-layer (primary spec) | **OUTPERFORMS** — Δ +6.26 nats [+0.34, +12.29] |
-| Paper 1 secondary | epithelial-class + germ-layer (alt spec for cov 8.2) | inconclusive (+4.33 [−1.86, +10.97]) |
-| Paper 2 | operator-composition extension (18 specs) | per [EXTENSION_VALIDATION_RESULTS.md](EXTENSION_VALIDATION_RESULTS.md) |
+| **Paper 1** | epithelial-class + germ-layer, 3-cov primary post-disposition (covariates 1.1, 8.2 @ epi/2a, 20.1 @ germ/3b) | **MATCHES with parameter reduction** — Δ +4.84 nats [−0.82, +10.05]; 75% free-parameter reduction on the three structural-prior covariates |
+| Paper 1 sensitivity | 4-cov original pre-reg (adds cov 10.1) | nominally Δ +6.26 [+0.34, +12.29], but cov 10.1's marginal contribution CI brackets zero (CHECK 1 + CHECK 2); preserved as sensitivity, not headline. See [LOCK_DIAGNOSTIC_DISPOSITION.md](LOCK_DIAGNOSTIC_DISPOSITION.md) |
+| Paper 1 secondary | epithelial-class + germ-layer (alt hierarchy for cov 8.2) | inconclusive (+4.33 [−1.86, +10.97]) |
+| Paper 2 | operator-composition extension (18 specs) | **FALSIFIES** per pre-reg; L1 retro finds cancer identity = 89% of variance (specs are 18 noisy estimates of one per-cancer profile). See [EXTENSION_VALIDATION_RESULTS.md](EXTENSION_VALIDATION_RESULTS.md) |
 | Paper 3 | MOFA-FLEX niche joint refit | **FALSIFIED** — substrate boundary identified |
-| **Paper 4 Phase 1** (new 2026-05-15) | 3 new external hierarchies: Thorsson immune, Malta stemness, Sanchez-Vega pathway | **PAPER1_HIERARCHY_SPECIFIC** — 0/3 outperform at locked CI threshold; 2/3 trend positive with comparable magnitudes but statistical power insufficient at n_test=1,362 |
+| **Paper 4 Phase 1** (2026-05-15) | 3 new external hierarchies: Thorsson immune, Malta stemness, Sanchez-Vega pathway | **PAPER1_HIERARCHY_SPECIFIC** — 0/3 outperform at locked CI threshold; 2/3 trend positive but statistical power insufficient at n_test=1,362 |
 
-## Paper 1 TL;DR (original headline)
+## Paper 1 TL;DR (post-disposition headline)
+
+The pre-registered validation was committed at 4 covariates (10.1, 1.1, 8.2 @ epi/2a, 20.1 @ germ/3b). It returned Δ +6.26 nats with bootstrap 95% CI excluding zero, meeting the locked OUTPERFORMS criterion in isolation. Pre-registered post-hoc marginal-contribution diagnostics on each of the four covariates ([LOCK_DIAGNOSTIC_PRE_REGISTRATION.md](LOCK_DIAGNOSTIC_PRE_REGISTRATION.md), [LOCK_DIAGNOSTIC_DISPOSITION.md](LOCK_DIAGNOSTIC_DISPOSITION.md)) found cov 10.1's individual contribution to held-out LPPD statistically indistinguishable from zero — both CHECK 1 (per-cancer LPPD contribution: 15/14 split, 0 cancers cross |1 nat|, binomial p=1.000) and CHECK 2 (patient-level bootstrap of cov 10.1 marginal: observed +1.42 nats, 95% CI [−1.66, +4.40], brackets zero) return Reading A. The 3-cov primary spec dropping cov 10.1 is the headline result.
 
 | model | held-out total LPPD | Δ vs baseline | bootstrap 95% CI | verdict |
 |---|---|---|---|---|
 | baseline (Samorodnitsky/Hoadley/Lock 2022, fit on 80% training) | −1038.69 | — | — | — |
-| **primary** structural-prior | **−1032.43** | **+6.26 nats** | **[+0.34, +12.29]** | **OUTPERFORMS** |
+| **3-cov primary (post-disposition headline)** | **−1033.85** | **+4.84 nats** | **[−0.82, +10.05]** | **MATCHES with parameter reduction** |
+| 4-cov sensitivity (original pre-reg) | −1032.43 | +6.26 nats | [+0.34, +12.29] | nominally outperforms in isolation but cov 10.1 marginal CI brackets zero — see [LOCK_DIAGNOSTIC_DISPOSITION.md](LOCK_DIAGNOSTIC_DISPOSITION.md) |
 | secondary structural-prior | −1034.36 | +4.33 nats | [−1.86, +10.97] | inconclusive |
 
 ## Paper 4 Phase 1 TL;DR (new 2026-05-15)
@@ -46,12 +50,17 @@ patient-level bootstrap.
 Decision rule (locked before any validation Gibbs run, see
 `PRE_REGISTRATION.md`): a model "outperforms" the baseline if held-out LPPD
 exceeds the baseline by > +2 nats *and* the bootstrap 95% CI on the
-difference excludes zero. Primary specification meets both criteria.
+difference excludes zero; "matches" if |Δ| ≤ 2 *or* the CI brackets zero.
+The post-disposition 3-cov primary returns Δ +4.84 nats with CI bracketing
+zero → matches with parameter reduction. The 4-cov sensitivity meets the
+"outperforms" criterion in isolation but the cov 10.1 marginal-contribution
+diagnostic (see TL;DR above) reframes it as a sensitivity row.
 
-The structural priors replace 116 free per-cancer beta parameters with 31
-group-shared betas across the four target covariates (a 73% reduction).
-Held-out predictive performance improves nonetheless — consistent with
-productive regularization, not flexibility loss.
+The 3-cov primary structural prior replaces 87 free per-cancer beta
+parameters with 22 group-shared betas across the three target covariates
+(a 75% reduction). Held-out predictive performance is statistically
+indistinguishable from baseline under this constraint — consistent with
+productive regularization.
 
 ---
 
@@ -158,9 +167,14 @@ performance when used as structural priors, even though no single candidate
 is individually Bonferroni-significant? Pre-registered in
 `PRE_REGISTRATION.md`, ran the modified Gibbs sampler at
 `scripts/validation/sampler_structural_prior.R`, evaluated held-out LPPD on
-the 20% test set with B=1000 bootstrap CI. Result: primary specification
-outperforms baseline (Δ=+6.26 nats, CI excludes zero). See
-`VALIDATION_RESULTS.md`.
+the 20% test set with B=1000 bootstrap CI. Original 4-cov result:
+Δ=+6.26 nats with CI excluding zero (nominal OUTPERFORMS). Post-hoc
+marginal-contribution diagnostics ([LOCK_DIAGNOSTIC_DISPOSITION.md](LOCK_DIAGNOSTIC_DISPOSITION.md))
+found cov 10.1's individual contribution indistinguishable from zero; the
+3-cov primary spec without cov 10.1 returns Δ=+4.84 nats with CI bracketing
+zero → matches with 75% parameter reduction. The 3-cov spec is the
+post-disposition headline; the 4-cov spec is preserved as a sensitivity
+row. See `VALIDATION_RESULTS.md` and `LOCK_DIAGNOSTIC_DISPOSITION.md`.
 
 ### 5. Follow-up investigations (post-shipping)
 
@@ -291,7 +305,8 @@ The niche operator class is insufficient on this substrate. See
 `MOFAFLEX_NICHE_JOINT_REFIT_RESULTS.md`.
 
 **Substrate-boundary interpretation:** the methodology that succeeded on the
-Lock 2022 spike-and-slab pan-cancer model (Paper 1 primary, +6.26 nats LPPD)
+Lock 2022 spike-and-slab pan-cancer model (Paper 1, 3-cov MATCHES with
+parameter reduction post-disposition; 4-cov sensitivity +6.26 nats)
 does not transfer to a MOFA-FLEX-style joint factor model with niche-as-
 residual-class. The two substrates differ in (i) loss landscape (per-patient
 survival likelihood vs per-cell Gaussian VI ELBO), (ii) parameter density
@@ -308,8 +323,8 @@ class signal in all three).
 
 ## Caveats
 
-- **Validation tests four pre-specified covariates only**, not all 68. The
-  result does not generalize to the full covariate set.
+- **Validation tests three pre-specified covariates (post-disposition; four in the 4-cov sensitivity)** out of 68. The result does not generalize to the full covariate set. The 3-cov ↔ 4-cov disposition trail is in [LOCK_DIAGNOSTIC_DISPOSITION.md](LOCK_DIAGNOSTIC_DISPOSITION.md).
+- **Joint validation can mask a noise-tier covariate** carrying the margin past significance. The pre-registered marginal-contribution diagnostic (CHECK 1 + CHECK 2) is the reason cov 10.1 is dropped from the headline. Forward replications should pre-register both the joint and marginal tests.
 - **Single 80/20 split**, not k-fold cross-validation. Tighter CIs and
   per-cancer subgroup tests would require k-fold.
 - **Tissue origin** is not used in any validation specification. It escapes
