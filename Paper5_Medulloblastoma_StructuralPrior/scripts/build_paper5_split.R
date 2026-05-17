@@ -54,9 +54,15 @@ save(train_idx, test_idx,
      file = file.path(ref_dir, "paper5_split_indices.rda"))
 
 # --- Build Lock-style Covariates / Survival / Censored ------------------
-age_z <- if ("age_at_dx" %in% names(clin_s)) {
-  as.numeric(scale(clin_s$age_at_dx))
-} else { rep(0, nrow(clin_s)) }
+# Impute missing age_at_dx to cohort median before standardizing — some
+# patients have OS data but no recorded age, and NA propagates into X
+# and breaks eigen() in the sampler.
+if ("age_at_dx" %in% names(clin_s)) {
+  age_raw <- as.numeric(clin_s$age_at_dx)
+  age_raw[is.na(age_raw)] <- median(age_raw, na.rm = TRUE)
+  age_z <- as.numeric(scale(age_raw))
+} else { age_z <- rep(0, nrow(clin_s)) }
+stopifnot(!any(is.na(age_z)))
 
 build_cov_for_subtype <- function(idx_set) {
   out <- list(); surv <- list(); cens <- list()
@@ -66,7 +72,9 @@ build_cov_for_subtype <- function(idx_set) {
     X_sub <- cbind(intercept = 1, age = age_z[keep], X_s[keep, , drop = FALSE])
     colnames(X_sub) <- c("0", "0.5", as.character(seq_len(ncol(X_s))))
     out[[s]]  <- X_sub
-    surv[[s]] <- log(pmax(clin_s$os_time_years[keep], 1/365))
+    # Lock sampler is log-normal AFT — takes raw survival in years and logs
+    # internally. Do NOT pre-log here. Clip to ≥ 1 day to avoid log(0).
+    surv[[s]] <- pmax(clin_s$os_time_years[keep], 1/365)
     cens[[s]] <- 1L - as.integer(clin_s$os_event[keep])
   }
   names(out) <- subtypes; names(surv) <- subtypes; names(cens) <- subtypes

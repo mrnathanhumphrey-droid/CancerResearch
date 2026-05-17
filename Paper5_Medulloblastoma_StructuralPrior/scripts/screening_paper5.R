@@ -47,12 +47,20 @@ subtypes <- sort(unique(sub_s))
 n_subtype <- length(subtypes)
 cat(sprintf("L2 subtypes: %d\n", n_subtype))
 
-# Add intercept (cov_id 0) and age-standardized (cov_id 0.5) per Lock convention
-age_z <- if ("age_at_dx" %in% names(clin_s)) {
-  as.numeric(scale(clin_s$age_at_dx))
+# Add intercept (cov_id 0) and age-standardized (cov_id 0.5) per Lock convention.
+# Some patients have OS data but missing age_at_dx; impute to cohort median
+# before standardizing so X has no NA (else eigen(Sigma) inside the sampler
+# blows up at iter 0).
+if ("age_at_dx" %in% names(clin_s)) {
+  age_raw <- as.numeric(clin_s$age_at_dx)
+  age_raw[is.na(age_raw)] <- median(age_raw, na.rm = TRUE)
+  age_z <- as.numeric(scale(age_raw))
+  cat(sprintf("age_at_dx: imputed %d NAs with cohort median %.2f\n",
+              sum(is.na(clin_s$age_at_dx)), median(age_raw, na.rm = TRUE)))
 } else {
-  rep(0, nrow(clin_s))  # if absent, age effect is zeroed
+  age_z <- rep(0, nrow(clin_s))
 }
+stopifnot(!any(is.na(age_z)))
 
 build_lists <- function(target_cov_idx = NULL) {
   Covariates <- list(); Survival <- list(); Censored <- list()
@@ -61,7 +69,10 @@ build_lists <- function(target_cov_idx = NULL) {
     X_sub <- cbind(intercept = 1, age = age_z[keep], X_s[keep, , drop = FALSE])
     colnames(X_sub) <- c("0", "0.5", as.character(seq_len(ncol(X_s))))
     Covariates[[s]] <- X_sub
-    Survival[[s]]   <- log(pmax(clin_s$os_time_years[keep], 1/365))  # log-AFT
+    # Lock sampler is log-normal AFT — takes raw survival in years and logs
+    # internally (`log(Y[[k]])`). Do NOT pre-log here. Clip to ≥ 1 day to
+    # avoid log(0) inside the sampler.
+    Survival[[s]]   <- pmax(clin_s$os_time_years[keep], 1/365)
     Censored[[s]]   <- 1L - as.integer(clin_s$os_event[keep])  # Lock: 1=censored
   }
   names(Covariates) <- subtypes
@@ -107,26 +118,46 @@ starting_values <- list(sigma2_start = sigma2_start,
                         gamma_start = gamma_start,
                         pi_start = pi_start)
 
-cat(sprintf("[%s] Starting baseline Gibbs (screening fit)\n", format(Sys.time())))
-out <- HierarchicalLogNormalSpikeSlab_StructuralPrior(
-  Covariates, Survival, Censored,
-  starting_values, iters, covariates_in_model,
-  covariates_by_cancer, priors,
-  pi_generation = "shared_across_cancers",
-  target_covs = list(),
-  progress = "normal"
-)
-saveRDS(out, file.path(data_dir, "screening_baseline_gibbs.rds"))
+gibbs_cache <- file.path(data_dir, "screening_baseline_gibbs.rds")
+if (file.exists(gibbs_cache) && file.info(gibbs_cache)$size > 1e6) {
+  cat(sprintf("[%s] Loading cached baseline Gibbs from %s\n",
+              format(Sys.time()), gibbs_cache))
+  out <- readRDS(gibbs_cache)
+} else {
+  cat(sprintf("[%s] Starting baseline Gibbs (screening fit)\n", format(Sys.time())))
+  out <- HierarchicalLogNormalSpikeSlab_StructuralPrior(
+    Covariates, Survival, Censored,
+    starting_values, iters, covariates_in_model,
+    covariates_by_cancer, priors,
+    pi_generation = "shared_across_cancers",
+    target_covs = list(),
+    progress = "normal"
+  )
+  saveRDS(out, gibbs_cache)
+}
 
 # --- Extract per-subtype PIPs and ANOVA against L2 -----------------------
+# Lock sampler quirk: out$gamma[[i]][[1]] is a named numeric vector with
+# cov_id labels, but post-burn iterations drop the names. Take names from
+# iter 1 and apply by column position after rbind.
 burn <- 50001L
 draws <- (burn + 1L):iters
 pip <- matrix(NA_real_, nrow = n_subtype, ncol = p,
               dimnames = list(subtypes, as.character(covariates_in_model)))
 for (i in seq_len(n_subtype)) {
   gg <- out$gamma[[i]]
+  ref_names <- names(gg[[1]])
+  if (is.null(ref_names)) {
+    cat(sprintf("[WARN] subtype %s: gamma iter 1 unnamed; skipping\n", subtypes[i]))
+    next
+  }
   M <- do.call(rbind, gg[draws])
-  pip[i, colnames(M)] <- colMeans(M)
+  colnames(M) <- ref_names
+  pip_means <- colMeans(M)
+  # Align by name (some cov_ids may not be present per subtype if covariate
+  # restriction were applied; here all 73 should be present).
+  in_pip <- intersect(ref_names, colnames(pip))
+  pip[i, in_pip] <- pip_means[in_pip]
 }
 
 screening <- data.frame(
@@ -142,17 +173,32 @@ sub_to_grp <- tapply(as.character(clin_s$subgroup), sub_s, function(x) x[1])
 grp_per_subtype <- sub_to_grp[subtypes]
 stopifnot(!any(is.na(grp_per_subtype)))
 
+cat(sprintf("\nPIP matrix: %d subtypes × %d covariates\n", nrow(pip), ncol(pip)))
+cat(sprintf("  fully-NA columns: %d / %d\n",
+            sum(apply(pip, 2, function(v) all(is.na(v)))), ncol(pip)))
+cat(sprintf("  partial-NA columns: %d / %d\n",
+            sum(apply(pip, 2, function(v) any(is.na(v)) && !all(is.na(v)))), ncol(pip)))
+
 for (j in seq_len(p)) {
   y <- pip[, j]
-  if (sd(y, na.rm = TRUE) < 1e-12) next
-  ss_within  <- sum(tapply(y, grp_per_subtype, function(z) sum((z - mean(z))^2)),
+  # Skip if entirely NA or has zero variance (degenerate covariate)
+  if (all(is.na(y))) next
+  s_y <- sd(y, na.rm = TRUE)
+  if (is.na(s_y) || s_y < 1e-12) next
+  # Pair against grp labels; drop subtypes with NA PIP
+  keep_idx <- !is.na(y)
+  y_k <- y[keep_idx]
+  g_k <- grp_per_subtype[keep_idx]
+  if (length(unique(g_k)) < 2L) next
+  ss_within  <- sum(tapply(y_k, g_k, function(z) sum((z - mean(z))^2)),
                     na.rm = TRUE)
-  ss_between <- sum(tapply(y, grp_per_subtype, function(z) length(z) * (mean(z) - mean(y))^2),
+  ss_between <- sum(tapply(y_k, g_k, function(z) length(z) * (mean(z) - mean(y_k))^2),
                     na.rm = TRUE)
   ss_total   <- ss_within + ss_between
+  if (ss_total <= 0) next
   screening$eta_sq[j] <- ss_between / ss_total
-  k <- length(unique(grp_per_subtype))
-  n <- length(y)
+  k <- length(unique(g_k))
+  n <- length(y_k)
   if (k > 1 && n > k && ss_within > 0) {
     screening$F_stat[j] <- (ss_between / (k - 1)) / (ss_within / (n - k))
     screening$p_val[j]  <- pf(screening$F_stat[j], k - 1, n - k, lower.tail = FALSE)

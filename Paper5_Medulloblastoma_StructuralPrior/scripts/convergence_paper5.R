@@ -10,6 +10,7 @@
 
 user_lib <- file.path(Sys.getenv("LOCALAPPDATA"), "R/win-library/4.6")
 .libPaths(c(user_lib, .libPaths()))
+options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 # Ensure posterior package is available
 for (pkg in c("posterior", "backports", "abind", "checkmate", "tensorA",

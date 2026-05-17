@@ -32,3 +32,10 @@ data/target_covs_*.rda
 
 # Cloned upstream replication repo (clone fresh per data/README.md)
 upstream/
+
+# Paper 5 / Cavalli — GEO downloads, BIDIFAC+ source cache, supp tables
+# (all reproducible from scripts; supp tables published, downloadable from Elsevier CDN)
+Paper5_Medulloblastoma_StructuralPrior/data/*.gz
+Paper5_Medulloblastoma_StructuralPrior/data/*.txt.gz
+Paper5_Medulloblastoma_StructuralPrior/data/bidifac_src/
+Paper5_Medulloblastoma_StructuralPrior/data/cavalli_supplementary_*.xlsx

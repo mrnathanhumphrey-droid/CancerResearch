@@ -21,6 +21,7 @@
 
 user_lib <- file.path(Sys.getenv("LOCALAPPDATA"), "R/win-library/4.6")
 .libPaths(c(user_lib, .libPaths()))
+options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 repo_root <- "C:/Cancer Research/Paper5_Medulloblastoma_StructuralPrior"
 data_dir <- file.path(repo_root, "data")
@@ -54,17 +55,77 @@ stopifnot(ncol(expr_mat) == 763)
 saveRDS(expr_mat,   file.path(data_dir, "cavalli_expr.rds"))
 saveRDS(expr_pdata, file.path(data_dir, "cavalli_expr_pdata.rds"))
 
-# --- 2. Methylation: GSE85212 (Illumina 450k, n=763) ---------------------
-cat(sprintf("[%s] Fetching GSE85212 (Cavalli methylation 450k)\n", format(Sys.time())))
+# --- 2. Methylation: GSE85212 supplementary β-values (1.9 GB) -----------
+# The GSE85212 series_matrix.txt.gz is metadata-only (36 KB) — actual β-values
+# are in the supplementary file GSE85212_Methylation_763samples_*.txt.gz (1.9 GB).
+# We pull pData from the series_matrix and the matrix itself from supplementary.
+cat(sprintf("[%s] Fetching GSE85212 pData (series_matrix)\n", format(Sys.time())))
 gse_meth <- getGEO("GSE85212", GSEMatrix = TRUE, destdir = data_dir, AnnotGPL = FALSE)
 gse_meth <- gse_meth[[1]]
-meth_mat <- exprs(gse_meth)
 meth_pdata <- pData(gse_meth)
+saveRDS(meth_pdata, file.path(data_dir, "cavalli_meth_pdata.rds"))
+
+supp_url <- "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE85nnn/GSE85212/suppl/GSE85212_Methylation_763samples_SubtypeStudy_TaylorLab_beta_values.txt.gz"
+supp_meth_gz <- file.path(data_dir, "GSE85212_meth_beta.txt.gz")
+if (!file.exists(supp_meth_gz) || file.info(supp_meth_gz)$size < 1e9) {
+  cat(sprintf("[%s] Downloading methylation β-values from GEO FTP (1.9 GB)\n",
+              format(Sys.time())))
+  options(timeout = 3600)
+  download.file(supp_url, destfile = supp_meth_gz, mode = "wb", quiet = FALSE)
+} else {
+  cat(sprintf("  methylation supplementary file present at %s (skipping download)\n",
+              supp_meth_gz))
+}
+
+if (!requireNamespace("data.table", quietly = TRUE)) {
+  install.packages("data.table", lib = user_lib)
+}
+library(data.table)
+
+cat(sprintf("[%s] Parsing methylation β-values (may take several minutes)\n",
+            format(Sys.time())))
+# Read the raw first line directly to preserve sample-ID names exactly as
+# they appear in the file (fread's check.names / as.matrix can mangle
+# underscores). The file's row 1 carries 763 sample IDs (no separate CpG-ID
+# header in column 1), so the column-1 cell of row 2 is the first CpG.
+con <- gzfile(supp_meth_gz, "r")
+header_line <- readLines(con, n = 1L)
+close(con)
+sample_ids_raw <- strsplit(header_line, "\t")[[1]]
+cat(sprintf("  header line has %d fields; first 3 = %s\n",
+            length(sample_ids_raw), paste(head(sample_ids_raw, 3), collapse = " ")))
+# If the header line has 763 sample IDs (no leading ID-column header),
+# then data rows 2+ have CpG-ID in column 1 + 763 β-values.
+# fread auto-handles the mismatch by assigning V1 to the first column.
+meth_dt <- fread(file = supp_meth_gz, sep = "\t", header = TRUE,
+                 na.strings = c("NA", "", "?"),
+                 check.names = FALSE)
+cat(sprintf("  fread result: %d rows × %d cols\n", nrow(meth_dt), ncol(meth_dt)))
+
+# Decide column-name source: prefer the raw header line over fread's parsing.
+cpg_ids <- meth_dt[[1]]
+meth_mat <- as.matrix(meth_dt[, -1, with = FALSE])
+rownames(meth_mat) <- cpg_ids
+if (length(sample_ids_raw) == ncol(meth_mat)) {
+  colnames(meth_mat) <- sample_ids_raw  # exact preservation from file
+} else if (length(sample_ids_raw) == ncol(meth_mat) + 1) {
+  # leading column had a header (e.g., "ID_REF"); drop it
+  colnames(meth_mat) <- sample_ids_raw[-1]
+} else {
+  warning(sprintf("Header line has %d fields but matrix has %d columns; using fread column names",
+                  length(sample_ids_raw), ncol(meth_mat)))
+}
 cat(sprintf("  methylation matrix: %d CpGs × %d samples\n",
             nrow(meth_mat), ncol(meth_mat)))
 stopifnot(ncol(meth_mat) == 763)
-saveRDS(meth_mat,   file.path(data_dir, "cavalli_meth.rds"))
-saveRDS(meth_pdata, file.path(data_dir, "cavalli_meth_pdata.rds"))
+
+cn <- colnames(meth_mat)
+n_mb <- sum(grepl("^MB_SubtypeStudy_", cn))
+cat(sprintf("  column names matching MB_SubtypeStudy_*: %d / %d\n", n_mb, length(cn)))
+stopifnot(n_mb >= 700)
+
+saveRDS(meth_mat, file.path(data_dir, "cavalli_meth.rds"))
+rm(meth_dt, meth_mat); invisible(gc())
 
 # --- 3. Clinical + subtype from mmc2.xlsx (Cavalli Table S1) -------------
 # Verified format (Cell Press mmc2.xlsx fetched 2026-05-15):
