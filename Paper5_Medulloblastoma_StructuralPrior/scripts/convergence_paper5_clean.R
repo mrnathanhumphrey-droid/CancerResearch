@@ -1,0 +1,5 @@
+src <- readLines("C:/Cancer Research/Paper5_Medulloblastoma_StructuralPrior/scripts/convergence_paper5.R")
+src <- gsub("gibbs_%s", "gibbs_%s_clean", src)
+src <- gsub("convergence_%s\\.csv", "convergence_%s_clean.csv", src)
+src <- gsub("convergence_summary\\.csv", "convergence_summary_clean.csv", src)
+eval(parse(text = paste(src, collapse = "\n")))
