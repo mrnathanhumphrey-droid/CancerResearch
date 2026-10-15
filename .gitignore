@@ -39,3 +39,6 @@ Paper5_Medulloblastoma_StructuralPrior/data/*.gz
 Paper5_Medulloblastoma_StructuralPrior/data/*.txt.gz
 Paper5_Medulloblastoma_StructuralPrior/data/bidifac_src/
 Paper5_Medulloblastoma_StructuralPrior/data/cavalli_supplementary_*.xlsx
+
+# publisher supplementary tables: download, do not redistribute
+Paper5_Medulloblastoma_StructuralPrior/data/cavalli_supplementary_*.xlsx

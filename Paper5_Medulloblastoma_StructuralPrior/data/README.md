@@ -20,7 +20,7 @@ Downloaded from Elsevier CDN, PII `S1535610817302015` (Cavalli 2017 *Cancer Cell
 | `cavalli_supplementary_S3_topgenes.xlsx` | `https://ars.els-cdn.com/content/image/1-s2.0-S1535610817302015-mmc4.xlsx` | 1.5 MB | Top genes (expression + methylation) per subgroup |
 | `cavalli_supplementary_S4_subtype_specific.xlsx` | `https://ars.els-cdn.com/content/image/1-s2.0-S1535610817302015-mmc5.xlsx` | 656 KB | Subtype-specific results: 12 sheets, one per 12-subtype (WNT alpha/beta, SHH alpha/beta/gamma/delta, Group 3 alpha/beta/gamma, Group 4 alpha/beta/gamma) |
 
-The `fetch_cavalli_data.R` script reads only `cavalli_supplementary_S1.xlsx` for the clinical pipeline; the other three are shipped here for completeness and downstream sensitivity analyses.
+The `fetch_cavalli_data.R` script reads only `cavalli_supplementary_S1.xlsx` for the clinical pipeline; the other three support downstream sensitivity analyses. **These four tables are not redistributed here** (publisher copyright): download each from the URL in the table above into `data/` and check it against `cavalli_supp_sha256.txt`.
 
 ## Expected on-disk artifacts after `fetch_cavalli_data.R`
 
